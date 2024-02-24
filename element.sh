@@ -4,7 +4,7 @@ if [[ -z $1 ]]
 then
   echo "Please provide an element as an argument."
 else
-  PSQL="psql --username=freecodecamp --dbname=periodic_table -t --no-align -c"
+  PSQL="psql --username=freecodecamp --dbname=periodic_table -t -c"
   # columns need to get
   COLUMNS="atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius"
   # check atomic number
@@ -21,8 +21,10 @@ else
   # return result
   if [[ $RESULT ]]
   then
-    echo $RESULT | read atomic_number bar name bar symbol bar type bar atomic_mass bar melting_point_celsius bar boiling_point_celsius
-    echo "The element with atomic number $atomic_number is $name ($symbol). It's a $type, with a mass of $atomic_mass amu. Hydrogen has a melting point of $melting_point_celsius celsius and a boiling point of $boiling_point_celsius celsius."
+    echo $RESULT | while read atomic_number bar name bar symbol bar type bar atomic_mass bar melting_point_celsius bar boiling_point_celsius
+    do
+      echo "The element with atomic number $atomic_number is $name ($symbol). It's a $type, with a mass of $atomic_mass amu. Hydrogen has a melting point of $melting_point_celsius celsius and a boiling point of $boiling_point_celsius celsius."
+    done
   else
     echo "I could not find that element in the database."
   fi
